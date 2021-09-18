@@ -22,8 +22,8 @@ def init(args):
 
 def startScan(name=str, target=str, URL=str):
     body = {
-        "scanname": 'Vinicius',
-        "scantarget": 'viniciushcrosa@gmail.com',
+        "scanname": name,
+        "scantarget": target,
         "usecase": "all",
         "modulelist": "",
         "typelist": ""
