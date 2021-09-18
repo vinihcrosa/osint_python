@@ -1,6 +1,8 @@
 import sqlite3
 from pathlib import Path
 
+from . import logs
+
 database_path = Path('../database/database.sql').resolve()
 
 def init():
@@ -34,7 +36,7 @@ CREATE TABLE IF NOT EXISTS results(
         cursor = conn.cursor()
         cursor.execute(create_spiderfoot_table_query)
     except:
-        print('An exception occurred')
+        logs.createLog('não foi possivel criar a tabela results', 50)
 
 
     create_instances_table_query = """
@@ -45,7 +47,10 @@ CREATE TABLE IF NOT EXISTS results(
     )
     """
 
-    cursor.execute(create_instances_table_query)
+    try:
+        cursor.execute(create_instances_table_query)
+    except:
+        logs.createLog('não foi possivel criar a tabela instances', 50)
 
     conn.close()
 
@@ -55,18 +60,19 @@ def getInstances():
 
     select_instances_query = """SELECT * FROM instances"""
 
-    cursor = newConn.execute(select_instances_query)
+    try:
+        cursor = newConn.execute(select_instances_query)
+        rows = cursor.fetchall()
+        instances = []
 
-    rows = cursor.fetchall()
-
-    instances = []
-
-    for row in rows:
-        instance = {
-            'name': row[1],
-            'target': row[2]
-        }
-        instances.append(instance)
+        for row in rows:
+            instance = {
+                'name': row[1],
+                'target': row[2]
+            }
+            instances.append(instance)
+    except:
+        logs.createLog('não foi possível selecionar as instances', 30)
 
     newConn.close()
     return instances

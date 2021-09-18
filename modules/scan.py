@@ -1,11 +1,10 @@
 import requests
 import time
 
+from . import logs
 from . import database
 
 def init(args):
-    print(args)
-
     URL = 'http://localhost:5001/startscan'
 
     if args.URL:
@@ -15,7 +14,16 @@ def init(args):
 
     for instance in instances:
         request = startScan(instance['name'], instance['target'], URL)
-        print(request)
+        if request.status_code == 200:
+            logs.createLog(
+                'Scan iniciado name: ' + instance['name'] + " - target: " + instance['target'],
+                20
+            )
+        else:
+            logs.createLog(
+                'Erro ao iciar scan name: '+ instance['name'] + " - target: " + instance['target'],
+                40
+            )
         time.sleep(3)
 
     return 0
