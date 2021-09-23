@@ -1,8 +1,8 @@
 import requests
 import time
 
-from . import logs
-from . import database
+from modules import logs
+from modules import database
 
 def init(args):
     URL = 'http://localhost:5001/startscan'
