@@ -46,3 +46,25 @@ def createInstance(name, target):
     except:
         logs.createLog('Não foi possivel criar a instancia name: {}, target: {}'
                        .format(name, target), 30)
+
+
+def insertResult(result):
+    insert_result_query = """INSERT INTO results(name, target, status, hash,
+                        type, generated, confidence, visibility,
+                        risk, module, data, false_positive,
+                        event, event_descr, event_raw, event_type)
+    VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"""
+
+
+    data = [result[1], result[2], result[6], result[8],
+            result[9], result[10]*1000, result[11], result[12],
+            result[13], result[14], result[15], result[16],
+            result[18], result[19], result[20], result[21]]
+    try:
+        conn = sqlite3.connect(database_path)
+        cursor = conn.execute(insert_result_query, data)
+        conn.commit()
+        logs.createLog('Result inserido no banco de dados, id do results -> ' + cursor.lastrowid, 20)
+        conn.close()
+    except:
+        logs.createLog('Erro ao criar resultado no bancod e dados: ' + result, 30)

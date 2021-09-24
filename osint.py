@@ -15,7 +15,7 @@ scan.add_argument(
 export = subparsers.add_parser('export',
     help='export data from spiderfoot to selected destination')
 export.add_argument(
-    '-p', '--path', type=str,
+    'path', type=str,
     help='path de onde o banco de dados se encontra, caso vazio será usado o padrão')
 
 

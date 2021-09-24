@@ -4,6 +4,8 @@ __pycache__/
 *$py.class
 
 osint/
+database/database.sql
+
 # C extensions
 *.so
 
