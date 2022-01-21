@@ -4,22 +4,22 @@ parser = argparse.ArgumentParser(
     description='CLI para tratamento de dados de OSINT')
 subparsers = parser.add_subparsers(help='teste', dest='command')
 
-## SubParser de scan
+# SubParser de scan
 scan = subparsers.add_parser('scan', help='init scan on spiderfoot')
 scan.add_argument(
     '-U', '--URL', type=str,
     help='URL do spiderfoot para fazer os scans'
 )
 
-## SubParser de export
+# SubParser de export
 export = subparsers.add_parser('export',
-    help='export data from spiderfoot to selected destination')
+                               help='export data from spiderfoot to selected destination')
 export.add_argument(
     'path', type=str,
     help='path de onde o banco de dados se encontra, caso vazio será usado o padrão')
 
 
-## SubParser de instance
+# SubParser de instance
 instance = subparsers.add_parser(
     'instance',
     help='instancias de scan do spiderfoot'
@@ -37,6 +37,18 @@ instance.add_argument(
 )
 instance.add_argument(
     '--google', action='store_true', help='planilha csv exportada do google'
+)
+
+# SubParser de database
+scan = subparsers.add_parser(
+    'database', help='configurações de banco de dados')
+scan.add_argument(
+    '-i', '--init', action='store_true',
+    help='Inicializa os bancod e dados criando as tabelas'
+)
+scan.add_argument(
+    '--postgres', action='store_true',
+    help='Inicializa os bancod e dados criando as tabelas'
 )
 
 args = parser.parse_args()

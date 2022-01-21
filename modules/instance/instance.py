@@ -13,7 +13,10 @@ def init(args):
 
             for i in contas.index:
                 name = contas['First Name [Required]'][i] + contas['Last Name [Required]'][i]
-                #print("name:  ", name)
                 email = contas["Email Address [Required]"][i]
-                #print("email: ", email)
                 database.createInstance(name, email)
+                logs.createLog('Instance criada via google sheets', '20')
+
+        elif (args.name and args.target):
+            database.createInstance(args.name, args.target)
+            logs.createLog('instancia criada de argumentos', 20)
